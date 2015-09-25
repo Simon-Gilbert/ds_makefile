@@ -5,8 +5,9 @@ NAME = journal
 CFLAGS = -Wall
 LDFLAGS = -L.
 LINK=ln -sv
+DIRECTORY=lib
 
-LINKERNAME = $(PROG)_library
+LINKERNAME = $(NAME)_library
 SONAME:=$(LINKERFILENAME)$(LIBMAJOR)
 REALNAME=$(SONAME)$(LIBMINOR)$(LIBPATCH)
 STATICNAME = lib$(LINKERNAME).a
@@ -22,21 +23,30 @@ libLDFLAGS = -L.
 libLDLIBS = -lc
 
 
-$(NAME): libjournal.a libjournal.so.1.1.57 
+$(NAME): $(STATICNAME) $(REALNAME)
+	
+	$(CC) -o $@.static $< $(LDFLAGS) -l:$(STATICNAME)	
+	touch $(NAME).log
+	$(CC) -o $@.shared $< $(LDFLAGS) -l$(LINKERNAME)
+	LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH ./$@.shared
+	cat $(NAME).log
+	rm -f *.o *$(NAME)*
 
+$(OBJ):$(DIRECTORY)/journal.c
+	$(CC) -c $^ $(CFLAGS)
 
-libjournal.a : 
-	$(CC) -c $(CFLAGS) lib/journal.c 
+$(STATICNAME) : 
+	$(CC) -c $(CFLAGS) $(DIRECTORY)/journal.c 
 	$(AR) rcs $(STATICNAME) $(OBJ)	 	
  		 	
  		 
-libjournal.so.1.1.57 : 
-	
-	gcc -fPIC -c -Wall lib/journal.c
-	gcc -shared -fPIC -Wl,-soname,libjournal.so.1 -o libjournal.so.1.1.57 journal.o -lc
-	ln -sv libjournal.so.1.1.57 libjournal.so.1
-	ln -sv libjournal.so.1.1.57 libjournal.so
+$(REALNAME) : $(OBJ)	
+	$(CC) $(libCFLAGS) -Wl,-soname,$(SONAME) -o $@ $^ $(libLDLIBS)
+	$(LINK) $@ $(SONAME)
+	$(LINK) $@ $(LINKERFILENAME)
+
+lib:$(STATICNAME) $(REALNAME)
 
 clean : 
-	rm -f *.o *libjournal* 
+	rm -f *.o *$(NAME)* 
 
