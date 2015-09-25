@@ -1,0 +1,35 @@
+\begin{theindex}
+
+  \item {D\+E\+B\+U\+G}
+    \subitem {journal.\+h}, \hyperpage{3}
+
+  \indexspace
+
+  \item {E\+R\+R\+O\+R}
+    \subitem {journal.\+h}, \hyperpage{2}
+
+  \indexspace
+
+  \item {I\+N\+F\+O}
+    \subitem {journal.\+h}, \hyperpage{3}
+
+  \indexspace
+
+  \item {journal.\+h}
+    \subitem {D\+E\+B\+U\+G}, \hyperpage{3}
+    \subitem {E\+R\+R\+O\+R}, \hyperpage{2}
+    \subitem {I\+N\+F\+O}, \hyperpage{3}
+    \subitem {N\+O\+N\+E}, \hyperpage{2}
+    \subitem {W\+A\+R\+N\+I\+N\+G}, \hyperpage{3}
+
+  \indexspace
+
+  \item {N\+O\+N\+E}
+    \subitem {journal.\+h}, \hyperpage{2}
+
+  \indexspace
+
+  \item {W\+A\+R\+N\+I\+N\+G}
+    \subitem {journal.\+h}, \hyperpage{3}
+
+\end{theindex}
